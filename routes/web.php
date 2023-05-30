@@ -18,4 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::apiResource("produit", ProduitController::class);
-Route::get('/create', [ProduitController::class, 'create']);
+Route::get('/create', [ProduitController::class, 'create'])->name('produit.create');

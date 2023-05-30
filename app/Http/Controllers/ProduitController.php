@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Produit;
 use Illuminate\Http\Request;
 
@@ -12,6 +11,8 @@ class ProduitController extends Controller
      */
     public function index()
     {
+        $produits = Produit::all();
+        return view('Produits.index', compact('produits'));
     }
 
     /**
@@ -28,19 +29,23 @@ class ProduitController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $validated = $request->validate([
+            'libelle' => 'required|unique:produits|max:255',
+            'prix' => 'required'
+        ]);
+
         $data = $request->all();
         Produit::create($data);
         return redirect()->back()->with('addSuccess', 'Le document a été ajouté avec succés');
     }
     
-
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
+        $produit = Produit::find($id);
+        return view('Produits.show', compact('produit'));
     }
 
     /**
